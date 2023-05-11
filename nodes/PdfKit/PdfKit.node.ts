@@ -26,7 +26,8 @@ export class PdfKit implements INodeType {
 				displayName: 'Operation',
 				name: 'operation',
 				type: 'options',
-				default: '',
+				noDataExpression: true,
+				default: 'imagesToPDF',
 				required: true,
 				options:[
 					{
@@ -34,7 +35,6 @@ export class PdfKit implements INodeType {
 						value:'imagesToPDF'
 					}
 				],
-				description: 'Operation to perform',
 			},
 			{
 				displayName: 'PDF Name',
@@ -49,8 +49,7 @@ export class PdfKit implements INodeType {
 				name: 'keepImages',
 				type: 'boolean',
 				default: false,
-				required: false,
-				description: 'Keep images that were used in the PDF.',
+				description: 'Whether to keep images that were used in the PDF',
 			},
 		],
 	};
@@ -70,7 +69,7 @@ export class PdfKit implements INodeType {
 					throw new NodeOperationError(this.getNode(), 'No binary data exists on item!');
 				}
 
-				const doc = new PDFDocument();
+				let doc;
 				for (var [index,key] of Object.keys(item.binary).entries()){
 					const binary = Object.assign({},item.binary[key]);
 					if(binary.fileType==='image'){
@@ -79,6 +78,9 @@ export class PdfKit implements INodeType {
 						const size =[dimensions.width,dimensions.height];
 						if(index !== 0){
 							doc.addPage({size:size});
+						}
+						else{
+							doc = new PDFDocument({margin:0, size:size});
 						}
 						doc.image(binaryDataBuffer, 0, 0, { fit: size, align: 'center', valign: 'center' })
 						if(!keepImages){

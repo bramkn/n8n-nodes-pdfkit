@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-pdfkit",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Node for using PDFKit to tranform images into PDF, more functionality may be added later.",
   "keywords": [
     "n8n-community-node-package"
@@ -46,6 +46,7 @@
     "typescript": "~4.8.4"
   },
   "dependencies": {
+    "eslint": "^8.40.0",
     "image-size": "^1.0.2",
     "pdfkit": "^0.13.0"
   }
