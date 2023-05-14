@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-pdfkit",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Node for using PDFKit to tranform images into PDF, more functionality may be added later.",
   "keywords": [
     "n8n-community-node-package"

@@ -37,6 +37,14 @@ export class PdfKit implements INodeType {
 				],
 			},
 			{
+				displayName: 'Destination Key',
+				name: 'outputKey',
+				type: 'string',
+				default: 'data',
+				required: true,
+				description: 'The name the binary key to copy data to',
+			},
+			{
 				displayName: 'PDF Name',
 				name: 'pdfName',
 				type: 'string',
@@ -63,6 +71,7 @@ export class PdfKit implements INodeType {
 		for (let itemIndex = 0; itemIndex < items.length; itemIndex++) {
 			try {
 				const outputName = this.getNodeParameter('pdfName', itemIndex, '') as string;
+				const outputKey = this.getNodeParameter('outputKey', itemIndex, '') as string;
 				item = items[itemIndex];
 
 				if (item.binary === undefined) {
@@ -89,7 +98,7 @@ export class PdfKit implements INodeType {
 					}
 				}
 				doc.end();
-				item.binary![outputName] = await this.helpers.prepareBinaryData(doc, `${outputName}.pdf`);
+				item.binary![outputKey] = await this.helpers.prepareBinaryData(doc, `${outputName}.pdf`);
 
 			} catch (error) {
 				// This node should never fail but we want to showcase how
